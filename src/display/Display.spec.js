@@ -30,9 +30,23 @@ test('displays Locked if the locked prop is true and Unlocked if otherwise', () 
 })
 
 test('when locked or closed use the red-led class', () => {
-  const { container } = render (<Display closed={true} locked ={true} />)
+  const { getByText } = render (<Display closed={true} locked ={true} />)
+
+  const locked = getByText(/locked/i)
+  const closed = getByText(/closed/i)
   
-  const lockedAndClosed = container.querySelectorAll('.red-led')
-  expect(lockedAndClosed.length).toBe(2)
+  expect(locked.classList.contains('red-led')).toBe(true)
+  expect(closed.classList.contains('red-led')).toBe(true)
+
+})
+
+test('when unlocked or open use the green-led class', () => {
+  const { getByText } = render (<Display closed={false} locked ={false} />)
+
+  const unlocked = getByText(/unlocked/i)
+  const open = getByText(/open/i)
+  
+  expect(unlocked.classList.contains('green-led')).toBe(true)
+  expect(open.classList.contains('green-led')).toBe(true)
 
 })
